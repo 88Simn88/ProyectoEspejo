@@ -11,7 +11,7 @@ const toggleModal = () => {
 
     return(
         <div 
-        className="h-screen w-screen bg-[url('../img/Hall.png')] bg-cover"
+        className="h-screen w-screen bg-[url('../img/Hall.png')] md:bg-cover"
         >
             <h1
             className="absolute top-20 left-10 text-2xl text-white "

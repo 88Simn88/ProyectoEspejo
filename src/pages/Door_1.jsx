@@ -1,6 +1,45 @@
 import { Link } from "react-router-dom"
+import { useModal } from "../context/ModalContext"
+import { useInventory } from "../context/InventoryContext"
 
 const Door_1 = () => {
+
+      const { showModal } = useModal() // Usa el contexto del modal
+      const { addItem } = useInventory() //Usa el contexto del inventario
+    
+      const items = {
+        rug: {
+          text: "Una Cómoda con muchas cosas...",
+          next: "Cofre",
+          buttonLabel: "Continuar"
+        },
+        Cofre: {
+          text: "Encontraste un Cofre, tiene algo adentro y parece que se abre con una palabra clave...",
+          item: { id: 2, name: "Cofre" },
+          buttonLabel: "Recoger"
+        },
+      }
+    
+      const openModal = (modalName) => {
+        const modalData = items[modalName]
+    
+        if (!modalData) return
+    
+        showModal({
+          text: modalData.text,
+          item: modalData.item,
+          addItem: addItem,
+          buttonLabel: modalData.buttonLabel,
+        /*   onNext: () => {
+            if (modalData.next) openModal(modalData.next)
+          } */
+            onNext: modalData.next ? () => openModal(modalData.next) : null,
+            next: modalData.next
+        })
+    
+      }
+
+     
 
     return(
         <div
@@ -24,6 +63,17 @@ to={"/inside"}
  className="absolute bg-black top-[400px] left-[50px] text-gray-500 p-2 px-5 hover:text-white hover:scale-105"
 
 >Hall</Link>
+
+{/* Objetos */}
+
+<div
+className="absolute transparent h-[130px] w-[220px] bottom-[20px] right-[50px] cursor-pointer"
+onClick={() => openModal("rug")}
+>
+
+</div>
+
+
 
         </div>
     )

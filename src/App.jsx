@@ -11,14 +11,36 @@ import MainRoom_3 from "./pages/MainRoom_3"
 import Divan_1 from "./pages/Divan_1"
 import Divan_2 from "./pages/Divan_2"
 import Divan_3 from "./pages/Divan_3"
+import { useState } from "react"
+import { InventoryProvider } from "./context/InventoryContext"
+import InventoryMenu from "./components/InventoryMenu"
 
 const App = () => {
 
+  const [isInventoryOpen, setIsInventoryOpen] = useState(false)
+
   return(
+    <InventoryProvider>
+
     <div>
 
+      {/* Botón para abrir/cerrar el inventario */}
+
+      <button
+      className="fixed top-20 right-4 bg-blue-500 text-white p-2 rounded"
+      onClick={() => setIsInventoryOpen(!isInventoryOpen)}
+      >
+        {isInventoryOpen ? "Cerrar Inventario" : "Abrir Inventario" }
+      </button>
+
+      {/* Mostrar el inventario si está abierto*/}
+      {isInventoryOpen && <InventoryMenu />}
+
+   {/*Barra de navegación */}
    <NavBar />
 
+
+{/*Rutas */}
    <Routes>
     
     <Route exact path="/" element={<Home />} />
@@ -38,6 +60,7 @@ const App = () => {
    </Routes>
    
     </div>
+    </InventoryProvider>
   )
 }
 
